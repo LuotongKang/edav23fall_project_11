@@ -3,3 +3,18 @@
 ## Description
 
 ## Missing value analysis
+
+```{r}
+nsch_df <- read.csv("data/nsch.csv")
+missing_df <- nsch_df[apply(is.na(nsch_df), 1, any), ]
+dim(nsch_df)
+dim(missing_df)
+```
+
+The dataset is large enough even after revoming the missing value. However, the proportion of NAs is too large so we have to figure out what is going on here.
+
+```{r}
+colSums(is.na(nsch_df)) |>
+  sort(decreasing = TRUE) |>
+  barplot(cex.names=0.7, las=2)
+```
