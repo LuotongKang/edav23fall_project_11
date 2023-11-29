@@ -176,7 +176,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#description" id="toc-description" class="nav-link active" data-scroll-target="#description"><span class="header-section-number">2.1</span> Description</a></li>
+  <li><a href="#description" id="toc-description" class="nav-link active" data-scroll-target="#description"><span class="header-section-number">2.1</span> Description</a>
+  <ul class="collapse">
+  <li><a href="#data-source" id="toc-data-source" class="nav-link" data-scroll-target="#data-source"><span class="header-section-number">2.1.1</span> Data Source</a></li>
+  <li><a href="#format-of-the-data-frequency-of-updates-dimensions" id="toc-format-of-the-data-frequency-of-updates-dimensions" class="nav-link" data-scroll-target="#format-of-the-data-frequency-of-updates-dimensions"><span class="header-section-number">2.1.2</span> Format of the data, Frequency of updates, Dimensions</a></li>
+  <li><a href="#import-the-data" id="toc-import-the-data" class="nav-link" data-scroll-target="#import-the-data"><span class="header-section-number">2.1.3</span> Import the data</a></li>
+  </ul></li>
   <li><a href="#missing-value-analysis" id="toc-missing-value-analysis" class="nav-link" data-scroll-target="#missing-value-analysis"><span class="header-section-number">2.2</span> Missing value analysis</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/LuotongKang/edav23fall_project_11/edit/main/data.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/LuotongKang/edav23fall_project_11/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -203,6 +208,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="description" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="description"><span class="header-section-number">2.1</span> Description</h2>
+<section id="data-source" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="data-source"><span class="header-section-number">2.1.1</span> Data Source</h3>
+<p>We obtained the data from the United States <a href="https://www.census.gov/programs-surveys/nsch/data/datasets.html">Census Bureau Website</a>, which is an official website of the US government. The data is collected from 2022 NSCH (National Survey of Children’s Health), a national and state-level survey on information related to the physical and mental health of children from 0 to 17 years old. The survey is conducted by the United States Census Bureau, Associate Director for Demographic Programs on behalf of the United States Department of Health and Human Services (HHS), Health Resources and Services Administration’s (HRSA) Maternal and Child Health Bureau (MCHB) .</p>
+</section>
+<section id="format-of-the-data-frequency-of-updates-dimensions" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="format-of-the-data-frequency-of-updates-dimensions"><span class="header-section-number">2.1.2</span> Format of the data, Frequency of updates, Dimensions</h3>
+<p>The 2022 Topical Data is originally in SAS format. The NSCH is conducted every year, so the data is collected and released every year. Specifically, the NSCH 2022 was collected from July 2022 to January 2023. The data has two dimensions. Each row represents a sample, and each column represents the answers to each question in the questionnaires. The 2022 Topical Data file includes records for 54,103 children (54103 rows), and there are answers to 490 questions for each child (490 columns). Issues / problems with the data The data is collected from questionnaires, so some information may not be complete. The 2022 topical data file involves both the complete and sufficient partial topical questionnaires. Therefore, we need to deal with missing values before we conduct analyses. Besides, the data involves different aspects of children’s health and well-being, but our purpose is to focus on children’s mental health. So we need to carefully identify and choose the relevant information from the 490 columns.<br>
+</p>
+</section>
+<section id="import-the-data" class="level3" data-number="2.1.3">
+<h3 data-number="2.1.3" class="anchored" data-anchor-id="import-the-data"><span class="header-section-number">2.1.3</span> Import the data</h3>
+<p>The original data is in SAS format, and it is not that easy to analyze. Thus, we plan to convert the data to csv format manually and store it as “nsch.csv”. Then, we just need to import the “nsch.csv” file into R-studio in DataFrame format to prepare the data for analyses.</p>
+</section>
 </section>
 <section id="missing-value-analysis" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="missing-value-analysis"><span class="header-section-number">2.2</span> Missing value analysis</h2>

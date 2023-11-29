@@ -178,7 +178,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#load-the-data" id="toc-load-the-data" class="nav-link active" data-scroll-target="#load-the-data"><span class="header-section-number">3.0.1</span> Load the data</a></li>
   <li><a href="#select-filter" id="toc-select-filter" class="nav-link" data-scroll-target="#select-filter"><span class="header-section-number">3.0.2</span> Select &amp; Filter</a></li>
-  <li><a href="#missing-value-analysis" id="toc-missing-value-analysis" class="nav-link" data-scroll-target="#missing-value-analysis"><span class="header-section-number">3.0.3</span> Missing Value Analysis</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/LuotongKang/edav23fall_project_11/edit/main/results.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/LuotongKang/edav23fall_project_11/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -229,8 +228,9 @@ Attaching package: 'dplyr'</code></pre>
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>nsch_topical <span class="ot">&lt;-</span> <span class="fu">read_sas</span>(<span class="st">'data/nsch_2022e_topical.sas7bdat'</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>nsch_topical <span class="ot">&lt;-</span> nsch_topical[nsch_topical<span class="sc">$</span>A1_GRADE_IF <span class="sc">!=</span> <span class="dv">1</span>, ] <span class="co"># imputed rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>nsch_topical <span class="ot">&lt;-</span> <span class="fu">read_sas</span>(<span class="fu">unz</span>(<span class="st">'data/nsch_2022e_topical.sas7bdat.zip'</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                             <span class="st">'nsch_2022e_topical.sas7bdat'</span>))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>nsch_topical <span class="ot">&lt;-</span> nsch_topical[nsch_topical<span class="sc">$</span>A1_GRADE_IF <span class="sc">!=</span> <span class="dv">1</span>, ] <span class="co"># imputed rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -253,13 +253,10 @@ Attaching package: 'dplyr'</code></pre>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(<span class="fu">c</span>(<span class="st">"HHID"</span>, <span class="st">"FORMTYPE"</span>, parent_ls, experence_ls, factor_ls))) <span class="sc">|&gt;</span></span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(FORMTYPE <span class="sc">!=</span> <span class="st">"T1"</span>)</span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(nsch_df[,<span class="sc">-</span><span class="dv">2</span>], <span class="st">"data/nsch.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(nsch_df[,<span class="sc">-</span><span class="dv">2</span>], <span class="st">"data/nsch.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># nsch_df &lt;- read.csv("data/nsch_dropna.csv") # See Chapter 2 for Missing Value Analysis</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-</section>
-<section id="missing-value-analysis" class="level3" data-number="3.0.3">
-<h3 data-number="3.0.3" class="anchored" data-anchor-id="missing-value-analysis"><span class="header-section-number">3.0.3</span> Missing Value Analysis</h3>
-<p>See <code>data.qmd</code></p>
 
 
 </section>
