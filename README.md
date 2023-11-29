@@ -2,7 +2,7 @@
 
 # EDAV of US Children's Mental Health
 
-## AUTHOR: Yuexin Zhu, Luotong Kang
+### AUTHOR: Yuexin Zhu, Luotong Kang
 
 ## Data
 
@@ -26,6 +26,6 @@ Independent variables: parent information, basic background checks, mental healt
 
 -   `result.qmd` contains visualizations and well-documented analysis.
 
--   `d3graph.qmd` used D3 to present an interactive/animated graph.
+-   `d3graph.qmd` uses D3 to present an interactive/animated graph.
 
 -   `conclusions.qmd` discusses main takeaways of our exploration, limitations, future directions, lessons learned.
