@@ -18,6 +18,13 @@
     "href": "data.html#missing-value-analysis",
     "title": "2  Data",
     "section": "2.2 Missing value analysis",
-    "text": "2.2 Missing value analysis"
+    "text": "2.2 Missing value analysis\n\n\nCode\nnsch_df &lt;- read.csv(\"data/nsch.csv\")\nmissing_df &lt;- nsch_df[apply(is.na(nsch_df), 1, any), ]\ndim(nsch_df)\n\n\n[1] 33264    42\n\n\nCode\ndim(missing_df)\n\n\n[1] 4611   42\n\n\nThe dataset is large enough even after revoming the missing value. However, the proportion of NAs is too large so we have to figure out what is going on here.\n\n\nCode\ncolSums(is.na(nsch_df)) |&gt;\n  sort(decreasing = TRUE) |&gt;\n  barplot(cex.names=0.7, las=2)"
+  },
+  {
+    "objectID": "results.html",
+    "href": "results.html",
+    "title": "3  Results",
+    "section": "",
+    "text": "3.0.1 Load the data\nWe read sas7bdat file downloaded from United States Census Bureau.\n“Adult 1 education, household size, and poverty ratio were imputed using sequential regression imputation methods.”\n\n\nCode\nlibrary(haven)\nlibrary(dplyr)\n\n\n\nAttaching package: 'dplyr'\n\n\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n\n\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n\n\nCode\nlibrary(tidyr)\nnsch_topical &lt;- read_sas('data/nsch_2022e_topical.sas7bdat')\nnsch_topical &lt;- nsch_topical[nsch_topical$A1_GRADE_IF != 1, ] # imputed rows\n\n\n\n\n3.0.2 Select & Filter\nWe select to include relevant columns. For details about the meaning of each column, please refer to data.qmd. We only study children between age 6-17, so we filter out the T1 children.\nIn the end of preprocessing, we stored the data as a csv file called nsch.csv inside the data folder\n\n\nCode\nparent_ls &lt;- c(\"A1_ACTIVE\", \"A1_AGE\", \"A1_BORN\", \"A1_EMPLOYED\",\"A1_GRADE\",\n               \"A1_MARITAL\", \"A1_MENTHEALTH\", \"A1_PHYSHEALTH\", \"FAMILY_R\")\nexperence_ls &lt;- c(\"ACE1\", \"ACE10\", \"ACE11\", \"ACE12\", \"ACE3\", \"ACE4\", \"ACE5\",\n                  \"ACE6\", \"ACE7\", \"ACE8\", \"ACE9\")   \nfactor_ls &lt;- c(\"BULLIED_R\", \"BULLY\", \"EVALFASD\",\"EVERHOMELESS\", \"FASD\",\n               \"GENETIC\", \"GRADES\",\"HHCOUNT\",\"HIGRADE_TVIS\",\n               \"HOPEFUL\",\"HOURSLEEP\",\"K2Q30A\",\"K2Q31A\",\"K2Q32A\", \"K2Q33A\",\n               \"K2Q34A\",\"K2Q35A\",\"K2Q37A\",\"K2Q38A\",\"K4Q22_R\",\"K4Q23\")\nnsch_df &lt;- nsch_topical |&gt;\n  select(all_of(c(\"HHID\", \"FORMTYPE\", parent_ls, experence_ls, factor_ls))) |&gt;\n  filter(FORMTYPE != \"T1\")\n\nwrite.csv(nsch_df[,-2], \"data/nsch.csv\", row.names = FALSE)\n\n\n\n\n3.0.3 Missing Value Analysis\nSee data.qmd"
   }
 ]
