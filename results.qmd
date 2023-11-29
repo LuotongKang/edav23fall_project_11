@@ -1,1 +1,29 @@
 # Results
+
+## Preprocess
+
+We read `sas7bdat` file downloaded from United States Census Bureau and stored the data as a csv file called `nsch.csv` inside the data folder. Then we filter to include relevant columns. For details about the meaning of each column, please refer to `data.qmd`. We only study children between 6-17, and we chose to drop missing values because the dataset is large enough.
+
+```{r}
+library(haven)
+library(dplyr)
+library(tidyr)
+# nsch_topical <- read_sas('nsch_2022e_topical.sas7bdat')
+# write.csv(nsch_topical, "data/nsch.csv", row.names = FALSE)
+nsch_df <- read.csv("data/nsch.csv")
+basics_ls <- c("A1_ACTIVE", "A1_AGE", "A1_BORN", "A1_EMPLOYED","A1_GRADE",
+               "A1_GRADE_IF", "A1_MARITAL", "A1_MENTHEALTH", "A1_PHYSHEALTH",
+               "A1_RELATION", "A1_SEX", "A2_ACTIVE", "A2_AGE", "A2_BORN",
+               "A2_EMPLOYED", "A2_GRADE", "A2_MARITAL", "A2_MENTHEALTH",
+               "A2_PHYSHEALTH", "A2_RELATION", "A2_SEX", "ACE1", "ACE10",
+               "ACE11", "ACE12", "ACE3", "ACE4", "ACE5", "ACE6", "ACE7",
+               "ACE8", "ACE9")   
+target_ls <- c("BULLIED_R", "BULLY", "COVIDARRANGE", "EVALFASD","EVERHOMELESS",
+               "FAMILY_R","FASD", "GENETIC","GRADES","HHCOUNT","HIGRADE_TVIS",
+               "HOPEFUL","HOURSLEEP","K2Q30A","K2Q31A","K2Q32A", "K2Q33A",
+               "K2Q34A","K2Q35A","K2Q37A","K2Q38A","K4Q22_R","K4Q23")
+nsch_df <- nsch_df |>
+  filter(FORMTYPE != "T1") |>
+  select(all_of(c(basics_ls,target_ls))) |>
+  drop_na()
+```
