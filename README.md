@@ -12,9 +12,9 @@ National Survey of Children's Health, 2022 Topical Data.
 
 ## Questions
 
-T2 and T3
+Focus on age groups T2 and T3
 
-Dependent variables: mental health issues like ADHD, Autism
+Dependent variables: mental health issues like Depression, ADHD, Autism
 
 Independent variables: parent information, basic background checks, mental health related factors
 
