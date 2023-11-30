@@ -1,8 +1,10 @@
 # Results
 
+## Preprocess
+
 ### Load the data
 
-We read `sas7bdat` file downloaded from United States Census Bureau. 
+We read `sas7bdat` file downloaded from United States Census Bureau.
 
 "Adult 1 education, household size, and poverty ratio were imputed using sequential regression imputation methods."
 
@@ -23,18 +25,19 @@ In the end of preprocessing, we stored the data as a csv file called `nsch.csv` 
 
 ```{r}
 parent_ls <- c("A1_ACTIVE", "A1_AGE", "A1_BORN", "A1_EMPLOYED","A1_GRADE",
-               "A1_MARITAL", "A1_MENTHEALTH", "A1_PHYSHEALTH", "FAMILY_R")
-experence_ls <- c("ACE1", "ACE10", "ACE11", "ACE12", "ACE3", "ACE4", "ACE5",
-                  "ACE6", "ACE7", "ACE8", "ACE9")   
-factor_ls <- c("BULLIED_R", "BULLY", "EVALFASD","EVERHOMELESS", "FASD",
-               "GENETIC", "GRADES","HHCOUNT","HIGRADE_TVIS",
-               "HOPEFUL","HOURSLEEP","K2Q30A","K2Q31A","K2Q32A", "K2Q33A",
+               "A1_MARITAL", "A1_MENTHEALTH", "A1_PHYSHEALTH", "FAMILY_R",
+               "HHCOUNT", "HIGRADE_TVIS", "HOMEEVIC", "HOPEFUL")
+experience_ls <- c("ACE1", "ACE10", "ACE11", "ACE12", "ACE3", "ACE4", "ACE5",
+                   "ACE6", "ACE7", "ACE8", "ACE9", "BULLIED_R", "BULLY",
+                   "EVERHOMELESS", "GRADES")
+physical_ls <- c("FASD", "GENETIC", "HOURSLEEP", "PHYSACTIV", "PHYSICALPAIN")
+mental_ls <- c("K2Q30A","K2Q31A","K2Q32A", "K2Q33A",
                "K2Q34A","K2Q35A","K2Q37A","K2Q38A","K4Q22_R","K4Q23")
 nsch_df <- nsch_topical |>
-  select(all_of(c("HHID", "FORMTYPE", parent_ls, experence_ls, factor_ls))) |>
+  select(all_of(c("HHID", "FORMTYPE", parent_ls, experience_ls,
+                  physical_ls, mental_ls))) |>
   filter(FORMTYPE != "T1")
 
 write.csv(nsch_df[,-2], "data/nsch.csv", row.names = FALSE)
-# nsch_df <- read.csv("data/nsch_dropna.csv") # See Chapter 2 for Missing Value Analysis
+nsch_df <- read.csv("data/nsch_dropna.csv") # See Chapter 2 for Missing Value Analysis
 ```
-
