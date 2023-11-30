@@ -48,53 +48,58 @@ R-studio in DataFrame format to prepare the data for analyses.
 
 ## Research Plan
 
-Based on the 4 big categories of research questions, we select different
-census questions to explore:
+### Census Question Columns
 
-### Parents / Environment
+Based on the **4 big categories of research questions**, we select
+different census questions to explore:
 
-`A1_ACTIVE, A1_AGE, A1_BORN, A1_EMPLOYED, A1_GRADE, A1_MARITAL, A1_MENTHEALTH, A1_PHYSHEALTH, FAMILY_R, HHCOUNT, HIGRADE_TVIS, HOMEEVIC, HOPEFUL`
+-   **Parents / Environment**
 
-These variables are basic information of guardians like whether they've
-served on active duty, the education level, life attitude, physical and
-mental health self-evaluation. Living environments like family structure
-and household sizes can be also considered when evaluating the
-correlation with mental health issues.
+    `A1_ACTIVE, A1_AGE, A1_BORN, A1_EMPLOYED, A1_GRADE, A1_MARITAL, A1_MENTHEALTH, A1_PHYSHEALTH, FAMILY_R, HHCOUNT, HIGRADE_TVIS, HOMEEVIC, HOPEFUL`
 
-### Children's Experience
+    These variables are basic information of guardians like whether
+    they've served on active duty, the education level, life attitude,
+    physical and mental health self-evaluation. Living environments like
+    family structure and household sizes can be also considered when
+    evaluating the correlation with mental health issues.
 
-`ACE1, ACE10, ACE11, ACE12, ACE3, ACE4, ACE5, ACE6, ACE7, ACE8, ACE9, BULLIED_R, BULLY, EVERHOMELESS, GRADES`
+-   **Children's Experience**
 
-In this category, guardians are asked to unveil their child's traumatic
-experience like being treated unfairly and living in an unsettled
-environment. In addition, experience of peer relationship (bully, grade)
-are also subjects to be tested.
+    `ACE1, ACE10, ACE11, ACE12, ACE3, ACE4, ACE5, ACE6, ACE7, ACE8, ACE9, BULLIED_R, BULLY, EVERHOMELESS, GRADES`
 
-### Physical Health
+    In this category, guardians are asked to unveil their child's
+    traumatic experience like being treated unfairly and living in an
+    unsettled environment. In addition, experience of peer relationship
+    (bully, grade) are also subjects to be tested.
 
-`FASD, GENETIC, HOURSLEEP, PHYSACTIV, PHYSICALPAIN`
+-   **Physical Health**
 
-By accessing the relation between mental health issues and physical
-health factors like activity frequency and hours of sleep, we can answer
-the last category of questions.
+    `FASD, GENETIC, HOURSLEEP, PHYSACTIV, PHYSICALPAIN`
 
-### Mental Health Indicator
+    By accessing the relation between mental health issues and physical
+    health factors like activity frequency and hours of sleep, we can
+    answer the last category of questions.
 
-`K2Q30A, K2Q31A, K2Q32A, K2Q33A, K2Q34A, K2Q35A, K2Q37A, K2Q38A, K4Q22_R, K4Q23`
+-   **Mental Health Indicator**
 
-These are the target variables, which includes YES/NO questions on
-whether this child is diagnosed to have mental health issues. Except for
-8 health problems, we also have the information that whether this child
-has taken treatments/medication or not.
+    `K2Q30A, K2Q31A, K2Q32A, K2Q33A, K2Q34A, K2Q35A, K2Q37A, K2Q38A, K4Q22_R, K4Q23`
 
-[Since almost all questions in this census have categorical answers, we
+    These are the target variables, which includes YES/NO questions on
+    whether this child is diagnosed to have mental health issues. Except
+    for 8 health problems, we also have the information that whether
+    this child has taken treatments/medication or not.
+
+### Visualizations
+
+Since almost all questions in this census have categorical answers, we
 can use contingency tables to draw stacked bar charts, Cleveland dot
 plots and mosaic plots to see the correlation. As shown above, we kept a
 large set of variables to explore, and we might want to try PCA as well
-to reduce dimension.]{.underline}
+to reduce dimension.
 
-*Please refer to the official variable list provided on the website for
-detailed question prompts.*
+*Please refer to the [official variable
+list](https://www2.census.gov/programs-surveys/nsch/technical-documentation/codebook/2022-NSCH-Topical-Variable-List.pdf)
+provided on the website for detailed question prompts.*
 
 ## Missing value analysis
 
@@ -111,10 +116,12 @@ avoid misinterpreation of data. We first check the number of
 columns/rows containing missing values using `colSums()` and
 `rowSums()`.
 
+### `colSums()`
+
 ```{r}
-colSums(missing) |>
-  sort(decreasing = TRUE) |>
-  barplot(cex.names=0.7, las=2, main="Missing Value Counts of Each Column")
+col_sum_na <- colSums(missing) |> sort(decreasing = TRUE)
+col_sum_na
+barplot(col_sum_na, cex.names=0.7, las=2, main="Missing Value Counts of Each Column")
 ```
 
 We can see that columns starts with "ACE" tend to have more missing
@@ -126,21 +133,79 @@ take this question as an optional one and leave it blank when they are
 unsure about the answer. If our inference here is correct, we can drop
 those rows without concerning serious effects.
 
+### Frequency of `rowSums()`
+
 For other columns, we would want to look at the `rowSums()` frequency.
 
+We are going to first remove columns starts with "ACE" (see previous
+section for analysis) and columns with 0 missing values. Then we filter
+to only include rows containing `NA`. We can see the dimension of
+missing value dataframe:
+
 ```{r}
-missing_except_ace <- missing[,-seq(12,21)]
-dim(nsch_df[apply(missing_except_ace, 1, any), ])
-rowSums(missing_except_ace) |> table()
+nsch_df_except_ace <- nsch_df[,-seq(16,25)]
+col_wo_na <- c("HHID", "A1_GRADE", "HHCOUNT", "HIGRADE_TVIS")
+col_names <- names(nsch_df_except_ace)
+nsch_df_except_ace <- nsch_df_except_ace[,-which(col_names %in% col_wo_na)]
+missing_except_ace <- is.na(nsch_df_except_ace)
+nsch_df_except_ace <- nsch_df_except_ace[apply(missing_except_ace, 1, any), ]
+dim(nsch_df_except_ace)
 ```
 
-After ignoring missing value in "ACE" columns, we can see among 4018
-rows containing missing values, 2848 of them only have 1 value missing.
+Then, we can draw the frequency bar chart of the missing vale of each
+row.
+
+```{r}
+freq_table_na_each_row <- rowSums(is.na(nsch_df_except_ace)) |> table()
+barplot(freq_table_na_each_row, cex.names=0.6,
+        main="Frequency of Missing Value Counts of Each Row")
+```
+
+The values represented by each bin are:
+
+```{r}
+freq_table_na_each_row
+```
+
+After ignoring missing value in "ACE" columns, we can see among 3547
+rows containing missing values, 2636 of them only have 1 value missing.
 This indicates that it is unlikely to have causal relationship between
-missing values in columns. In other words, missing a value in column A
-doesn't lead to missing a value in column B. Given that the dataset is
-large enough and most columns are categorica, we choose to remove
+missing values in columns. We are going to validate this statement by
+drawing a correlation matrix on missing values.
+
+### Correlation Matrix
+
+Using an indicator dataframe, we put 1 on the position where the
+truncated dataframe has `NA` in that position, and put 0 otherwise. We
+are going to draw a correlation matrix of this indicator to see whether
+missing a value in column A lead to missing a value in column B.
+
+```{r}
+cor_matrix <- cor(as.data.frame(missing_except_ace) +1-1)
+
+library(ggplot2)
+# Reshape the correlation matrix for ggplot
+cor_df <- as.data.frame(as.table(cor_matrix))
+names(cor_df) <- c("Var1", "Var2", "Corr")
+
+# Plot the correlation matrix using ggplot2
+heatmap <- ggplot(cor_df, aes(Var1, Var2, fill = Corr)) +
+  geom_tile(color = "white", size = 0.5) +
+  scale_fill_gradient2(low = "blue", high = "red", mid="white",
+                       name = "Correlation", midpoint = 0) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(title = "Correlation Matrix")
+
+# Display the plot
+print(heatmap)
+```
+
+We can see no extreme correlation is found. Given that the dataset is
+large enough and most columns are categorical, we choose to remove
 missing values.
+
+### Drop and Save
 
 ```{r}
 library(tidyverse)
