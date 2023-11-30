@@ -15,3 +15,5 @@ Children's mental health is a subject of increasing concern in contemporary soci
 2.  Children's experience and mental health: Are children more likely to be depressed if they have been treated unfairly because of gender identity or sexual orientation? How does being a victim of violence, living with people with alcohol problems, and experiencing parent divorce affect children's mental health respectively?
 
 3.  Mutual effect of mental health problems on children: Do children who have one mental issue tend to suffer from other problems as well? How do other factors affect the number of mental illnesses children have?
+
+4.  Relationship between physical health and mental health.

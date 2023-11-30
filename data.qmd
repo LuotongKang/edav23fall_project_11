@@ -1,3 +1,9 @@
+---
+editor: 
+  markdown: 
+    wrap: 72
+---
+
 # Data
 
 ## Description
@@ -40,20 +46,103 @@ Thus, we plan to convert the data to csv format manually and store it as
 "nsch.csv". Then, we just need to import the "nsch.csv" file into
 R-studio in DataFrame format to prepare the data for analyses.
 
+## Research Plan
+
+Based on the 4 big categories of research questions, we select different
+census questions to explore:
+
+### Parents / Environment
+
+`A1_ACTIVE, A1_AGE, A1_BORN, A1_EMPLOYED, A1_GRADE, A1_MARITAL, A1_MENTHEALTH, A1_PHYSHEALTH, FAMILY_R, HHCOUNT, HIGRADE_TVIS, HOMEEVIC, HOPEFUL`
+
+These variables are basic information of guardians like whether they've
+served on active duty, the education level, life attitude, physical and
+mental health self-evaluation. Living environments like family structure
+and household sizes can be also considered when evaluating the
+correlation with mental health issues.
+
+### Children's Experience
+
+`ACE1, ACE10, ACE11, ACE12, ACE3, ACE4, ACE5, ACE6, ACE7, ACE8, ACE9, BULLIED_R, BULLY, EVERHOMELESS, GRADES`
+
+In this category, guardians are asked to unveil their child's traumatic
+experience like being treated unfairly and living in an unsettled
+environment. In addition, experience of peer relationship (bully, grade)
+are also subjects to be tested.
+
+### Physical Health
+
+`FASD, GENETIC, HOURSLEEP, PHYSACTIV, PHYSICALPAIN`
+
+By accessing the relation between mental health issues and physical
+health factors like activity frequency and hours of sleep, we can answer
+the last category of questions.
+
+### Mental Health Indicator
+
+`K2Q30A, K2Q31A, K2Q32A, K2Q33A, K2Q34A, K2Q35A, K2Q37A, K2Q38A, K4Q22_R, K4Q23`
+
+These are the target variables, which includes YES/NO questions on
+whether this child is diagnosed to have mental health issues. Except for
+8 health problems, we also have the information that whether this child
+has taken treatments/medication or not.
+
+[Since almost all questions in this census have categorical answers, we
+can use contingency tables to draw stacked bar charts, Cleveland dot
+plots and mosaic plots to see the correlation. As shown above, we kept a
+large set of variables to explore, and we might want to try PCA as well
+to reduce dimension.]{.underline}
+
+*Please refer to the official variable list provided on the website for
+detailed question prompts.*
 
 ## Missing value analysis
 
 ```{r}
 nsch_df <- read.csv("data/nsch.csv")
-missing_df <- nsch_df[apply(is.na(nsch_df), 1, any), ]
+missing <- is.na(nsch_df)
 dim(nsch_df)
-dim(missing_df)
+dim(nsch_df[apply(missing, 1, any), ])
 ```
 
-The dataset is large enough even after revoming the missing value. However, the proportion of NAs is too large so we have to figure out what is going on here.
+The dataset is large enough even if we choose removing all the NAs.
+However, we still want to figure out the pattern of missing values to
+avoid misinterpreation of data. We first check the number of
+columns/rows containing missing values using `colSums()` and
+`rowSums()`.
 
 ```{r}
-colSums(is.na(nsch_df)) |>
+colSums(missing) |>
   sort(decreasing = TRUE) |>
-  barplot(cex.names=0.7, las=2)
+  barplot(cex.names=0.7, las=2, main="Missing Value Counts of Each Column")
+```
+
+We can see that columns starts with "ACE" tend to have more missing
+values. If we check the meaning of variables, we can see that these
+columns are questions related to "Child Experienced". The question
+prompt starts with "To the best of your knowledge", and only 2 options
+(1=Yes or 2=No) are provided. People who take the questionaire might
+take this question as an optional one and leave it blank when they are
+unsure about the answer. If our inference here is correct, we can drop
+those rows without concerning serious effects.
+
+For other columns, we would want to look at the `rowSums()` frequency.
+
+```{r}
+missing_except_ace <- missing[,-seq(12,21)]
+dim(nsch_df[apply(missing_except_ace, 1, any), ])
+rowSums(missing_except_ace) |> table()
+```
+
+After ignoring missing value in "ACE" columns, we can see among 4018
+rows containing missing values, 2848 of them only have 1 value missing.
+This indicates that it is unlikely to have causal relationship between
+missing values in columns. In other words, missing a value in column A
+doesn't lead to missing a value in column B. Given that the dataset is
+large enough and most columns are categorica, we choose to remove
+missing values.
+
+```{r}
+library(tidyverse)
+write.csv(drop_na(nsch_df), "data/nsch_dropna.csv", row.names = FALSE)
 ```

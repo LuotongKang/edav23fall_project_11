@@ -176,8 +176,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#load-the-data" id="toc-load-the-data" class="nav-link active" data-scroll-target="#load-the-data"><span class="header-section-number">3.0.1</span> Load the data</a></li>
-  <li><a href="#select-filter" id="toc-select-filter" class="nav-link" data-scroll-target="#select-filter"><span class="header-section-number">3.0.2</span> Select &amp; Filter</a></li>
+  <li><a href="#preprocess" id="toc-preprocess" class="nav-link active" data-scroll-target="#preprocess"><span class="header-section-number">3.1</span> Preprocess</a>
+  <ul class="collapse">
+  <li><a href="#load-the-data" id="toc-load-the-data" class="nav-link" data-scroll-target="#load-the-data"><span class="header-section-number">3.1.1</span> Load the data</a></li>
+  <li><a href="#select-filter" id="toc-select-filter" class="nav-link" data-scroll-target="#select-filter"><span class="header-section-number">3.1.2</span> Select &amp; Filter</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/LuotongKang/edav23fall_project_11/edit/main/results.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/LuotongKang/edav23fall_project_11/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -201,15 +204,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="load-the-data" class="level3" data-number="3.0.1">
-<h3 data-number="3.0.1" class="anchored" data-anchor-id="load-the-data"><span class="header-section-number">3.0.1</span> Load the data</h3>
+<section id="preprocess" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="preprocess"><span class="header-section-number">3.1</span> Preprocess</h2>
+<section id="load-the-data" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="load-the-data"><span class="header-section-number">3.1.1</span> Load the data</h3>
 <p>We read <code>sas7bdat</code> file downloaded from United States Census Bureau.</p>
 <p>“Adult 1 education, household size, and poverty ratio were imputed using sequential regression imputation methods.”</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr, <span class="at">quietly =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>
@@ -234,31 +239,34 @@ Attaching package: 'dplyr'</code></pre>
 </details>
 </div>
 </section>
-<section id="select-filter" class="level3" data-number="3.0.2">
-<h3 data-number="3.0.2" class="anchored" data-anchor-id="select-filter"><span class="header-section-number">3.0.2</span> Select &amp; Filter</h3>
+<section id="select-filter" class="level3" data-number="3.1.2">
+<h3 data-number="3.1.2" class="anchored" data-anchor-id="select-filter"><span class="header-section-number">3.1.2</span> Select &amp; Filter</h3>
 <p>We select to include relevant columns. For details about the meaning of each column, please refer to <code>data.qmd</code>. We only study children between age 6-17, so we filter out the <code>T1</code> children.</p>
 <p>In the end of preprocessing, we stored the data as a csv file called <code>nsch.csv</code> inside the data folder</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>parent_ls <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A1_ACTIVE"</span>, <span class="st">"A1_AGE"</span>, <span class="st">"A1_BORN"</span>, <span class="st">"A1_EMPLOYED"</span>,<span class="st">"A1_GRADE"</span>,</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>               <span class="st">"A1_MARITAL"</span>, <span class="st">"A1_MENTHEALTH"</span>, <span class="st">"A1_PHYSHEALTH"</span>, <span class="st">"FAMILY_R"</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>experence_ls <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"ACE1"</span>, <span class="st">"ACE10"</span>, <span class="st">"ACE11"</span>, <span class="st">"ACE12"</span>, <span class="st">"ACE3"</span>, <span class="st">"ACE4"</span>, <span class="st">"ACE5"</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"ACE6"</span>, <span class="st">"ACE7"</span>, <span class="st">"ACE8"</span>, <span class="st">"ACE9"</span>)   </span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>factor_ls <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"BULLIED_R"</span>, <span class="st">"BULLY"</span>, <span class="st">"EVALFASD"</span>,<span class="st">"EVERHOMELESS"</span>, <span class="st">"FASD"</span>,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>               <span class="st">"GENETIC"</span>, <span class="st">"GRADES"</span>,<span class="st">"HHCOUNT"</span>,<span class="st">"HIGRADE_TVIS"</span>,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>               <span class="st">"HOPEFUL"</span>,<span class="st">"HOURSLEEP"</span>,<span class="st">"K2Q30A"</span>,<span class="st">"K2Q31A"</span>,<span class="st">"K2Q32A"</span>, <span class="st">"K2Q33A"</span>,</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>               <span class="st">"K2Q34A"</span>,<span class="st">"K2Q35A"</span>,<span class="st">"K2Q37A"</span>,<span class="st">"K2Q38A"</span>,<span class="st">"K4Q22_R"</span>,<span class="st">"K4Q23"</span>)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>nsch_df <span class="ot">&lt;-</span> nsch_topical <span class="sc">|&gt;</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(<span class="fu">c</span>(<span class="st">"HHID"</span>, <span class="st">"FORMTYPE"</span>, parent_ls, experence_ls, factor_ls))) <span class="sc">|&gt;</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(FORMTYPE <span class="sc">!=</span> <span class="st">"T1"</span>)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(nsch_df[,<span class="sc">-</span><span class="dv">2</span>], <span class="st">"data/nsch.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># nsch_df &lt;- read.csv("data/nsch_dropna.csv") # See Chapter 2 for Missing Value Analysis</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>               <span class="st">"A1_MARITAL"</span>, <span class="st">"A1_MENTHEALTH"</span>, <span class="st">"A1_PHYSHEALTH"</span>, <span class="st">"FAMILY_R"</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>               <span class="st">"HHCOUNT"</span>, <span class="st">"HIGRADE_TVIS"</span>, <span class="st">"HOMEEVIC"</span>, <span class="st">"HOPEFUL"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>experience_ls <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"ACE1"</span>, <span class="st">"ACE10"</span>, <span class="st">"ACE11"</span>, <span class="st">"ACE12"</span>, <span class="st">"ACE3"</span>, <span class="st">"ACE4"</span>, <span class="st">"ACE5"</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"ACE6"</span>, <span class="st">"ACE7"</span>, <span class="st">"ACE8"</span>, <span class="st">"ACE9"</span>, <span class="st">"BULLIED_R"</span>, <span class="st">"BULLY"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"EVERHOMELESS"</span>, <span class="st">"GRADES"</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>physical_ls <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"FASD"</span>, <span class="st">"GENETIC"</span>, <span class="st">"HOURSLEEP"</span>, <span class="st">"PHYSACTIV"</span>, <span class="st">"PHYSICALPAIN"</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>mental_ls <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"K2Q30A"</span>,<span class="st">"K2Q31A"</span>,<span class="st">"K2Q32A"</span>, <span class="st">"K2Q33A"</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>               <span class="st">"K2Q34A"</span>,<span class="st">"K2Q35A"</span>,<span class="st">"K2Q37A"</span>,<span class="st">"K2Q38A"</span>,<span class="st">"K4Q22_R"</span>,<span class="st">"K4Q23"</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>nsch_df <span class="ot">&lt;-</span> nsch_topical <span class="sc">|&gt;</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(<span class="fu">c</span>(<span class="st">"HHID"</span>, <span class="st">"FORMTYPE"</span>, parent_ls, experience_ls,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                  physical_ls, mental_ls))) <span class="sc">|&gt;</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(FORMTYPE <span class="sc">!=</span> <span class="st">"T1"</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(nsch_df[,<span class="sc">-</span><span class="dv">2</span>], <span class="st">"data/nsch.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>nsch_df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/nsch_dropna.csv"</span>) <span class="co"># See Chapter 2 for Missing Value Analysis</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
