@@ -184,12 +184,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#research-plan" id="toc-research-plan" class="nav-link" data-scroll-target="#research-plan"><span class="header-section-number">2.2</span> Research Plan</a>
   <ul class="collapse">
-  <li><a href="#parents-environment" id="toc-parents-environment" class="nav-link" data-scroll-target="#parents-environment"><span class="header-section-number">2.2.1</span> Parents / Environment</a></li>
-  <li><a href="#childrens-experience" id="toc-childrens-experience" class="nav-link" data-scroll-target="#childrens-experience"><span class="header-section-number">2.2.2</span> Children’s Experience</a></li>
-  <li><a href="#physical-health" id="toc-physical-health" class="nav-link" data-scroll-target="#physical-health"><span class="header-section-number">2.2.3</span> Physical Health</a></li>
-  <li><a href="#mental-health-indicator" id="toc-mental-health-indicator" class="nav-link" data-scroll-target="#mental-health-indicator"><span class="header-section-number">2.2.4</span> Mental Health Indicator</a></li>
+  <li><a href="#census-question-columns" id="toc-census-question-columns" class="nav-link" data-scroll-target="#census-question-columns"><span class="header-section-number">2.2.1</span> Census Question Columns</a></li>
+  <li><a href="#visualizations" id="toc-visualizations" class="nav-link" data-scroll-target="#visualizations"><span class="header-section-number">2.2.2</span> Visualizations</a></li>
   </ul></li>
-  <li><a href="#missing-value-analysis" id="toc-missing-value-analysis" class="nav-link" data-scroll-target="#missing-value-analysis"><span class="header-section-number">2.3</span> Missing value analysis</a></li>
+  <li><a href="#missing-value-analysis" id="toc-missing-value-analysis" class="nav-link" data-scroll-target="#missing-value-analysis"><span class="header-section-number">2.3</span> Missing value analysis</a>
+  <ul class="collapse">
+  <li><a href="#colsums" id="toc-colsums" class="nav-link" data-scroll-target="#colsums"><span class="header-section-number">2.3.1</span> <code>colSums()</code></a></li>
+  <li><a href="#frequency-of-rowsums" id="toc-frequency-of-rowsums" class="nav-link" data-scroll-target="#frequency-of-rowsums"><span class="header-section-number">2.3.2</span> Frequency of <code>rowSums()</code></a></li>
+  <li><a href="#correlation-matrix" id="toc-correlation-matrix" class="nav-link" data-scroll-target="#correlation-matrix"><span class="header-section-number">2.3.3</span> Correlation Matrix</a></li>
+  <li><a href="#drop-and-save" id="toc-drop-and-save" class="nav-link" data-scroll-target="#drop-and-save"><span class="header-section-number">2.3.4</span> Drop and Save</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/LuotongKang/edav23fall_project_11/edit/main/data.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/LuotongKang/edav23fall_project_11/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -231,28 +235,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="research-plan" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="research-plan"><span class="header-section-number">2.2</span> Research Plan</h2>
-<p>Based on the 4 big categories of research questions, we select different census questions to explore:</p>
-<section id="parents-environment" class="level3" data-number="2.2.1">
-<h3 data-number="2.2.1" class="anchored" data-anchor-id="parents-environment"><span class="header-section-number">2.2.1</span> Parents / Environment</h3>
+<section id="census-question-columns" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="census-question-columns"><span class="header-section-number">2.2.1</span> Census Question Columns</h3>
+<p>Based on the <strong>4 big categories of research questions</strong>, we select different census questions to explore:</p>
+<ul>
+<li><p><strong>Parents / Environment</strong></p>
 <p><code>A1_ACTIVE, A1_AGE, A1_BORN, A1_EMPLOYED, A1_GRADE, A1_MARITAL, A1_MENTHEALTH, A1_PHYSHEALTH, FAMILY_R, HHCOUNT, HIGRADE_TVIS, HOMEEVIC, HOPEFUL</code></p>
-<p>These variables are basic information of guardians like whether they’ve served on active duty, the education level, life attitude, physical and mental health self-evaluation. Living environments like family structure and household sizes can be also considered when evaluating the correlation with mental health issues.</p>
-</section>
-<section id="childrens-experience" class="level3" data-number="2.2.2">
-<h3 data-number="2.2.2" class="anchored" data-anchor-id="childrens-experience"><span class="header-section-number">2.2.2</span> Children’s Experience</h3>
+<p>These variables are basic information of guardians like whether they’ve served on active duty, the education level, life attitude, physical and mental health self-evaluation. Living environments like family structure and household sizes can be also considered when evaluating the correlation with mental health issues.</p></li>
+<li><p><strong>Children’s Experience</strong></p>
 <p><code>ACE1, ACE10, ACE11, ACE12, ACE3, ACE4, ACE5, ACE6, ACE7, ACE8, ACE9, BULLIED_R, BULLY, EVERHOMELESS, GRADES</code></p>
-<p>In this category, guardians are asked to unveil their child’s traumatic experience like being treated unfairly and living in an unsettled environment. In addition, experience of peer relationship (bully, grade) are also subjects to be tested.</p>
-</section>
-<section id="physical-health" class="level3" data-number="2.2.3">
-<h3 data-number="2.2.3" class="anchored" data-anchor-id="physical-health"><span class="header-section-number">2.2.3</span> Physical Health</h3>
+<p>In this category, guardians are asked to unveil their child’s traumatic experience like being treated unfairly and living in an unsettled environment. In addition, experience of peer relationship (bully, grade) are also subjects to be tested.</p></li>
+<li><p><strong>Physical Health</strong></p>
 <p><code>FASD, GENETIC, HOURSLEEP, PHYSACTIV, PHYSICALPAIN</code></p>
-<p>By accessing the relation between mental health issues and physical health factors like activity frequency and hours of sleep, we can answer the last category of questions.</p>
-</section>
-<section id="mental-health-indicator" class="level3" data-number="2.2.4">
-<h3 data-number="2.2.4" class="anchored" data-anchor-id="mental-health-indicator"><span class="header-section-number">2.2.4</span> Mental Health Indicator</h3>
+<p>By accessing the relation between mental health issues and physical health factors like activity frequency and hours of sleep, we can answer the last category of questions.</p></li>
+<li><p><strong>Mental Health Indicator</strong></p>
 <p><code>K2Q30A, K2Q31A, K2Q32A, K2Q33A, K2Q34A, K2Q35A, K2Q37A, K2Q38A, K4Q22_R, K4Q23</code></p>
-<p>These are the target variables, which includes YES/NO questions on whether this child is diagnosed to have mental health issues. Except for 8 health problems, we also have the information that whether this child has taken treatments/medication or not.</p>
-<p><u>Since almost all questions in this census have categorical answers, we can use contingency tables to draw stacked bar charts, Cleveland dot plots and mosaic plots to see the correlation. As shown above, we kept a large set of variables to explore, and we might want to try PCA as well to reduce dimension.</u></p>
-<p><em>Please refer to the official variable list provided on the website for detailed question prompts.</em></p>
+<p>These are the target variables, which includes YES/NO questions on whether this child is diagnosed to have mental health issues. Except for 8 health problems, we also have the information that whether this child has taken treatments/medication or not.</p></li>
+</ul>
+</section>
+<section id="visualizations" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="visualizations"><span class="header-section-number">2.2.2</span> Visualizations</h3>
+<p>Since almost all questions in this census have categorical answers, we can use contingency tables to draw stacked bar charts, Cleveland dot plots and mosaic plots to see the correlation. As shown above, we kept a large set of variables to explore, and we might want to try PCA as well to reduce dimension.</p>
+<p><em>Please refer to the <a href="https://www2.census.gov/programs-surveys/nsch/technical-documentation/codebook/2022-NSCH-Topical-Variable-List.pdf">official variable list</a> provided on the website for detailed question prompts.</em></p>
 </section>
 </section>
 <section id="missing-value-analysis" class="level2" data-number="2.3">
@@ -276,53 +280,141 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>The dataset is large enough even if we choose removing all the NAs. However, we still want to figure out the pattern of missing values to avoid misinterpreation of data. We first check the number of columns/rows containing missing values using <code>colSums()</code> and <code>rowSums()</code>.</p>
+<section id="colsums" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="colsums"><span class="header-section-number">2.3.1</span> <code>colSums()</code></h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(missing) <span class="sc">|&gt;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>(<span class="at">decreasing =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">barplot</span>(<span class="at">cex.names=</span><span class="fl">0.7</span>, <span class="at">las=</span><span class="dv">2</span>, <span class="at">main=</span><span class="st">"Missing Value Counts of Each Column"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>col_sum_na <span class="ot">&lt;-</span> <span class="fu">colSums</span>(missing) <span class="sc">|&gt;</span> <span class="fu">sort</span>(<span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>col_sum_na</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>        ACE12         ACE10         K4Q23          ACE6          ACE8 
+          633           581           567           555           549 
+         ACE9          ACE7          ACE5          ACE4         ACE11 
+          541           532           510           459           454 
+         ACE3        GRADES     BULLIED_R         BULLY       HOPEFUL 
+          401           371           349           337           328 
+    PHYSACTIV     HOURSLEEP  EVERHOMELESS        K2Q31A   A1_EMPLOYED 
+          278           253           252           226           208 
+     HOMEEVIC  PHYSICALPAIN          ACE1        A1_AGE        K2Q33A 
+          202           183           175           170           170 
+       K2Q38A        K2Q35A          FASD    A1_MARITAL        K2Q32A 
+          168           167           166           163           152 
+      GENETIC        K2Q37A       K4Q22_R     A1_ACTIVE       A1_BORN 
+          151           150           150           134           133 
+A1_PHYSHEALTH        K2Q30A A1_MENTHEALTH        K2Q34A      FAMILY_R 
+          131           129           102            89            54 
+         HHID      A1_GRADE       HHCOUNT  HIGRADE_TVIS 
+            0             0             0             0 </code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(col_sum_na, <span class="at">cex.names=</span><span class="fl">0.7</span>, <span class="at">las=</span><span class="dv">2</span>, <span class="at">main=</span><span class="st">"Missing Value Counts of Each Column"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="data_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We can see that columns starts with “ACE” tend to have more missing values. If we check the meaning of variables, we can see that these columns are questions related to “Child Experienced”. The question prompt starts with “To the best of your knowledge”, and only 2 options (1=Yes or 2=No) are provided. People who take the questionaire might take this question as an optional one and leave it blank when they are unsure about the answer. If our inference here is correct, we can drop those rows without concerning serious effects.</p>
+</section>
+<section id="frequency-of-rowsums" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="frequency-of-rowsums"><span class="header-section-number">2.3.2</span> Frequency of <code>rowSums()</code></h3>
 <p>For other columns, we would want to look at the <code>rowSums()</code> frequency.</p>
+<p>We are going to first remove columns starts with “ACE” (see previous section for analysis) and columns with 0 missing values. Then we filter to only include rows containing <code>NA</code>. We can see the dimension of missing value dataframe:</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>missing_except_ace <span class="ot">&lt;-</span> missing[,<span class="sc">-</span><span class="fu">seq</span>(<span class="dv">12</span>,<span class="dv">21</span>)]</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(nsch_df[<span class="fu">apply</span>(missing_except_ace, <span class="dv">1</span>, any), ])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>nsch_df_except_ace <span class="ot">&lt;-</span> nsch_df[,<span class="sc">-</span><span class="fu">seq</span>(<span class="dv">16</span>,<span class="dv">25</span>)]</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>col_wo_na <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"HHID"</span>, <span class="st">"A1_GRADE"</span>, <span class="st">"HHCOUNT"</span>, <span class="st">"HIGRADE_TVIS"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>col_names <span class="ot">&lt;-</span> <span class="fu">names</span>(nsch_df_except_ace)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>nsch_df_except_ace <span class="ot">&lt;-</span> nsch_df_except_ace[,<span class="sc">-</span><span class="fu">which</span>(col_names <span class="sc">%in%</span> col_wo_na)]</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>missing_except_ace <span class="ot">&lt;-</span> <span class="fu">is.na</span>(nsch_df_except_ace)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>nsch_df_except_ace <span class="ot">&lt;-</span> nsch_df_except_ace[<span class="fu">apply</span>(missing_except_ace, <span class="dv">1</span>, any), ]</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(nsch_df_except_ace)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 4018   44</code></pre>
+<pre><code>[1] 3547   30</code></pre>
 </div>
+</div>
+<p>Then, we can draw the frequency bar chart of the missing vale of each row.</p>
+<div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rowSums</span>(missing_except_ace) <span class="sc">|&gt;</span> <span class="fu">table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>freq_table_na_each_row <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(<span class="fu">is.na</span>(nsch_df_except_ace)) <span class="sc">|&gt;</span> <span class="fu">table</span>()</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(freq_table_na_each_row, <span class="at">cex.names=</span><span class="fl">0.6</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">main=</span><span class="st">"Frequency of Missing Value Counts of Each Row"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="data_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The values represented by each bin are:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>freq_table_na_each_row</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-    0     1     2     3     4     5     6     7     8     9    10    11    12 
-29246  2848   441   174   203   136    63    36    30    19    29     8    14 
-   13    14    15    16    17    19 
-    7     2     2     4     1     1 </code></pre>
+   1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16 
+2636  402  159   89  102   42   31   26   23    9   10    8    4    1    3    1 
+  18 
+   1 </code></pre>
 </div>
 </div>
-<p>After ignoring missing value in “ACE” columns, we can see among 4018 rows containing missing values, 2848 of them only have 1 value missing. This indicates that it is unlikely to have causal relationship between missing values in columns. In other words, missing a value in column A doesn’t lead to missing a value in column B. Given that the dataset is large enough and most columns are categorica, we choose to remove missing values.</p>
+<p>After ignoring missing value in “ACE” columns, we can see among 3547 rows containing missing values, 2636 of them only have 1 value missing. This indicates that it is unlikely to have causal relationship between missing values in columns. We are going to validate this statement by drawing a correlation matrix on missing values.</p>
+</section>
+<section id="correlation-matrix" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="correlation-matrix"><span class="header-section-number">2.3.3</span> Correlation Matrix</h3>
+<p>Using an indicator dataframe, we put 1 on the position where the truncated dataframe has <code>NA</code> in that position, and put 0 otherwise. We are going to draw a correlation matrix of this indicator to see whether missing a value in column A lead to missing a value in column B.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>cor_matrix <span class="ot">&lt;-</span> <span class="fu">cor</span>(<span class="fu">as.data.frame</span>(missing_except_ace) <span class="sc">+</span><span class="dv">1-1</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Reshape the correlation matrix for ggplot</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>cor_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">as.table</span>(cor_matrix))</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(cor_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Var1"</span>, <span class="st">"Var2"</span>, <span class="st">"Corr"</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the correlation matrix using ggplot2</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>heatmap <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(cor_df, <span class="fu">aes</span>(Var1, Var2, <span class="at">fill =</span> Corr)) <span class="sc">+</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"white"</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">"blue"</span>, <span class="at">high =</span> <span class="st">"red"</span>, <span class="at">mid=</span><span class="st">"white"</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>                       <span class="at">name =</span> <span class="st">"Correlation"</span>, <span class="at">midpoint =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Correlation Matrix"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the plot</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(heatmap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="data_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We can see no extreme correlation is found. Given that the dataset is large enough and most columns are categorical, we choose to remove missing values.</p>
+</section>
+<section id="drop-and-save" class="level3" data-number="2.3.4">
+<h3 data-number="2.3.4" class="anchored" data-anchor-id="drop-and-save"><span class="header-section-number">2.3.4</span> Drop and Save</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.3     ✔ readr     2.1.4
 ✔ forcats   1.0.0     ✔ stringr   1.5.0
-✔ ggplot2   3.4.3     ✔ tibble    3.2.1
-✔ lubridate 1.9.2     ✔ tidyr     1.3.0
-✔ purrr     1.0.2     
+✔ lubridate 1.9.2     ✔ tibble    3.2.1
+✔ purrr     1.0.2     ✔ tidyr     1.3.0
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
@@ -330,11 +422,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(<span class="fu">drop_na</span>(nsch_df), <span class="st">"data/nsch_dropna.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(<span class="fu">drop_na</span>(nsch_df), <span class="st">"data/nsch_dropna.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
