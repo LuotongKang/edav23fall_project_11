@@ -32,12 +32,88 @@ experience_ls <- c("ACE1", "ACE10", "ACE11", "ACE12", "ACE3", "ACE4", "ACE5",
                    "EVERHOMELESS", "GRADES")
 physical_ls <- c("FASD", "GENETIC", "HOURSLEEP", "PHYSACTIV", "PHYSICALPAIN")
 mental_ls <- c("K2Q30A","K2Q31A","K2Q32A", "K2Q33A",
-               "K2Q34A","K2Q35A","K2Q37A","K2Q38A","K4Q22_R","K4Q23")
+               "K2Q34A","K2Q35A","K2Q37A","K2Q38A")
+treatment_ls <- c("K4Q22_R","K4Q23")
 nsch_df <- nsch_topical |>
   select(all_of(c("HHID", "FORMTYPE", parent_ls, experience_ls,
-                  physical_ls, mental_ls))) |>
+                  physical_ls, mental_ls, treatment_ls))) |>
   filter(FORMTYPE != "T1")
 
 write.csv(nsch_df[,-2], "data/nsch.csv", row.names = FALSE)
 nsch_df <- read.csv("data/nsch_dropna.csv") # See Chapter 2 for Missing Value Analysis
 ```
+
+## Main Results
+
+### Children's experience and mental health
+
+1.  Are children more likely to be depressed if they have been treated unfairly because of gender identity or sexual orientation?
+
+    ```{r}
+    library(vcd)
+    icecreamcolors <- c("#ff99ff", "#cc9966") 
+    unfair_depress <- nsch_df |>
+      mutate(Depression = ifelse(nsch_df$K2Q32A == 1, "Yes", "No")) |>
+      mutate(Unfair_identity = ifelse(nsch_df$ACE10 == 1, "Yes", "No")) |>
+      group_by(Unfair_identity,Depression)|>
+      summarize(Freq = n())
+    mosaic(Depression ~ Unfair_identity, data=unfair_depress, direction = c("v","h"), main = "Depression and Unfair Treatment from Identity",highlighting_fill = icecreamcolors)
+    ```
+
+    To investigate this question, we drew a mosaic plot with two variables:
+
+    unfair_identity: referred as `ACE10` in the original data, showing whether the child has ever experienced unfair treatments because of gender identity or sexual orientation
+
+    depression: referred as `K2Q32A` in the original data, showing whether the child has depression
+
+    We split the dependent variable depression horizontally, and the independent variable unfair_identity vertically. From the mosaic plot, we can see that children who have been treated unfairly because of gender identity or sexual orientation are more likely to have depression.
+
+2.  How does being a victim of violence, living with people with alcohol problems, and experiencing parent divorce affect children's mental health respectively?
+
+    ```{r}
+    library(ggplot2)
+    library(dplyr)
+    library(tidyr)
+    victim_mental <- nsch_df |>
+      mutate(Child_mental_struggle = ifelse(rowSums(nsch_df[, mental_ls] == 1) > 0,"Yes", "No")) |>
+      mutate(Victim_violence = ifelse(nsch_df$ACE7 == 1, "Yes", "No")) |>
+      mutate(Alchohol_drug = ifelse(nsch_df$ACE9 == 1, "Yes", "No")) |>
+      mutate(Parent_divorce = ifelse(nsch_df$ACE3 == 1, "Yes", "No"))
+      #group_by(Victim_violence, Alchohol_drug,Parent_divorce,Child_mental_struggle)|>
+      #summarize(Freq = n())
+    victim_mental <- select(victim_mental,Child_mental_struggle,Victim_violence,Alchohol_drug,Parent_divorce)
+    #pairs(table(victim_mental), highlighting = 2,text_panel=list(cex.labels=0.5))
+    victim_mental <- pivot_longer(victim_mental,cols = Victim_violence:Parent_divorce, names_to = "Type",values_to = "Experience" )
+    ggplot(victim_mental, aes(x = Experience, fill = Child_mental_struggle)) + 
+        geom_bar() + 
+        facet_wrap(~Type) +
+        scale_fill_manual(values = icecreamcolors)
+        
+    ```
+
+3.  What's the relationship between children's grade at school and mental health issues
+
+    ```{r}
+    library(ggalluvial)
+    value_mapping <- data.frame(original=c(1,2,3,4,5,6),
+                                replacement=c("Mostly A", "Mostly A and B", "Mostly B and C", "Mostly C and D","Mostly D and E", "Unknown"))
+    grade_mental <- nsch_df |>
+      mutate(Child_mental_struggle = ifelse(rowSums(nsch_df[, mental_ls] == 1) > 0,"Yes", "No")) |>
+      mutate(Grade=value_mapping$replacement[match(GRADES,value_mapping$original)]) |>
+      #mutate(Depression = ifelse(nsch_df$K2Q32A == 1, "Yes", "No")) |>
+      #mutate(Grade = ifelse(nsch_df$GRADES == 1, "Yes", "No")) |>
+      group_by(Grade,Child_mental_struggle)|>
+      summarize(Freq = n())
+
+    ggplot(grade_mental, aes(axis1 = Grade, axis2 = Child_mental_struggle, y=Freq)) +
+      geom_alluvium(aes(fill = Grade), width = 1/12) +
+      geom_stratum() +
+      geom_text(stat = "stratum", aes(label = paste(after_stat(stratum)#, "\n", after_stat(count) 
+                                                    )))+
+      ggtitle("Relationship between Grade at School and Mental Health Issues")
+      scale_x_discrete(limits = c("GRADES", "Child_mental_struggle"))
+    ```
+
+Children who mostly has C's and D's or D's and E's are much more likely to suffer from mental issues. The better grade a child has, the less likely that child has mental issues. Probably mutual effect
+
+### Mutual effect of mental health problems on children
