@@ -32,12 +32,163 @@ experience_ls <- c("ACE1", "ACE10", "ACE11", "ACE12", "ACE3", "ACE4", "ACE5",
                    "EVERHOMELESS", "GRADES")
 physical_ls <- c("FASD", "GENETIC", "HOURSLEEP", "PHYSACTIV", "PHYSICALPAIN")
 mental_ls <- c("K2Q30A","K2Q31A","K2Q32A", "K2Q33A",
-               "K2Q34A","K2Q35A","K2Q37A","K2Q38A","K4Q22_R","K4Q23")
+               "K2Q34A","K2Q35A","K2Q37A","K2Q38A")
+treatment_ls <- c("K4Q22_R","K4Q23")
 nsch_df <- nsch_topical |>
   select(all_of(c("HHID", "FORMTYPE", parent_ls, experience_ls,
-                  physical_ls, mental_ls))) |>
+                  physical_ls, mental_ls, treatment_ls))) |>
   filter(FORMTYPE != "T1")
 
 write.csv(nsch_df[,-2], "data/nsch.csv", row.names = FALSE)
-nsch_df <- read.csv("data/nsch_dropna.csv") # See Chapter 2 for Missing Value Analysis
+```
+
+### Missing Value Analysis
+
+```{r}
+nsch_df <- read.csv("data/nsch_dropna.csv") # See Chapter 2
+```
+
+### Change to Descriptive Column Names
+
+-   K2Q30A ‐ Learning Disability
+
+-   K2Q31A ‐ ADD/ADHD
+
+-   K2Q32A ‐ Depression
+
+-   K2Q33A ‐ Anxiety
+
+-   K2Q34A ‐ Behavior Problems
+
+-   K2Q35A ‐ Autism ASD
+
+-   K2Q37A ‐ Speech Disorder
+
+-   K2Q38A ‐ Tourette Syndrome
+
+```         
+my_dataframe <- my_dataframe %>% 
+        rename("id" = "c1",
+               "pages" = "c2",
+               "name" = "c3")`
+```
+
+## Guardian's Influence on Children's Mental Health
+
+### Full-time Employment + Education
+
+```{r}
+par_grade_employ <- nsch_df |>
+  mutate(Fully_Employed = ifelse(nsch_df$A1_EMPLOYED == 1, "Yes", "No")) |>
+  mutate(Child_mental_struggle = ifelse(rowSums(nsch_df[, mental_ls] == 1) > 0,
+                                      "Yes", "No")) |>
+  group_by(Fully_Employed, A1_GRADE, Child_mental_struggle)|>
+  summarize(Freq = n())
+  
+library(vcd)
+mosaic(Child_mental_struggle ~ Fully_Employed + A1_GRADE,
+       data=par_grade_employ, direction=c("h", "v", "h")) 
+```
+
+**A1_EMPLOYED ‐ Adult 1 ‐ Current Employment Status (T1 T2 T3)**
+
+Which of the following best describes your current employment status?
+
+1 = 8th grade or less
+
+2 = 9th‐12th grade; No diploma
+
+3 = High School Graduate or GED Completed
+
+4 = Completed a vocational, trade, or business school program
+
+5 = Some College Credit, but No Degree
+
+6 = Associate Degree (AA, AS)
+
+7 = Bachelor's Degree (BA, BS, AB)
+
+8 = Master's Degree (MA, MS, MSW, MBA)
+
+9 = Doctorate (PhD, EdD) or Professional Degree (MD, DDS, DVM, JD)
+
+### WIthin children with mental struggles, what's proportion of each problem with respect to A1_MENTHEALTH, facet by FAMILY_R
+
+```{r}
+par_mental_famstruc_issues <- nsch_df |>
+  mutate(Child_mental_struggle = ifelse(rowSums(nsch_df[, mental_ls] == 1) > 0,
+                                      "Yes", "No")) |>
+  filter(Child_mental_struggle == "Yes") |>
+  pivot_longer(cols = K2Q30A:K2Q38A, names_to = "Issues") |>
+  select(all_of(c("FAMILY_R", "A1_MENTHEALTH", "Issues", "value"))) |>
+  filter(value == 1) |>
+  group_by(FAMILY_R, A1_MENTHEALTH, Issues) |>
+  summarize(Freq = n())
+```
+
+```{r}
+library(ggplot2)
+plot_df <- par_mental_famstruc_issues |> group_by(FAMILY_R, A1_MENTHEALTH) |> 
+  mutate(Total = sum(Freq)) |> ungroup()
+ggplot(plot_df, aes(x = A1_MENTHEALTH, y = Issues)) +
+  geom_tile(aes(fill = (Freq/Total)), color = "white") +
+  coord_fixed() + 
+  scale_fill_gradient(low = "white", high = "red") +
+  facet_wrap(~FAMILY_R, ncol = 4) + theme_heat
+```
+
+**FAMILY_R ‐ Family Structure (T1 T2 T3)**
+
+1 = Two biogical/adoptive parents, currently married
+
+2 = Two biogical/adoptive parents, not currently married
+
+3 = Two parents (at least one not biological/adoptive), currently married
+
+4 = Two parents (at least one not biological/adoptive), not currently married
+
+5 = Single mother
+
+6 = Single father
+
+7 = Grandparent household
+
+8 = Other relation					
+
+**A1_MENTHEALTH ‐ Adult 1 ‐ Mental or Emotional Health (T1 T2 T3)**
+
+In general, how is your mental or emotional health?
+
+1 = Excellent
+
+2 = Very Good
+
+3 = Good
+
+4 = Fair
+
+5 = Poor
+
+### Treatment
+
+```{r}
+library(forcats)
+nsch_df |>
+  mutate(Treatment = ifelse(nsch_df$K4Q22_R == 1, "Yes", "No")) |>
+  pivot_longer(mental_ls, names_to = "Issues") |>
+  filter(value == 1) |>
+  select(all_of(c("Issues", "Treatment"))) |>
+  ggplot(aes(x = fct_infreq(Issues), fill = Treatment)) +
+  geom_bar() + labs(x = "Issues")
+  
+```
+
+```{r}
+nsch_df |>
+  mutate(Treatment = ifelse(nsch_df$K4Q22_R == 1, "Yes", "No")) |>
+  pivot_longer(mental_ls, names_to = "Issues") |>
+  filter(value == 1) |>
+  select(all_of(c("A1_AGE", "Issues", "Treatment"))) |>
+  ggplot(aes(x = A1_AGE, y=Treatment)) +
+  geom_boxplot()
 ```
