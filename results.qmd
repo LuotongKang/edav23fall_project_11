@@ -153,7 +153,7 @@ ggplot(plot_df, aes(x = A1_MENTHEALTH, y = Issues)) +
 
 7 = Grandparent household
 
-8 = Other relation					
+8 = Other relation
 
 **A1_MENTHEALTH ‐ Adult 1 ‐ Mental or Emotional Health (T1 T2 T3)**
 
@@ -184,13 +184,33 @@ nsch_df |>
 ```
 
 ```{r}
+# install.packages("ggridges")
+library(ggridges)
 nsch_df |>
   mutate(Treatment = ifelse(nsch_df$K4Q22_R == 1, "Yes", "No")) |>
-  pivot_longer(mental_ls, names_to = "Issues") |>
-  filter(value == 1) |>
-  select(all_of(c("A1_AGE", "Issues", "Treatment"))) |>
+  mutate(Child_mental_struggle = ifelse(rowSums(nsch_df[, mental_ls] == 1) > 0,
+                                      "Yes", "No")) |>
+  filter(Child_mental_struggle == "Yes") |>
+  select(all_of(c("A1_AGE", "Treatment"))) |>
   ggplot(aes(x = A1_AGE, y=Treatment)) +
-  geom_boxplot()
+  geom_density_ridges(bandwidth = 1, scale = 0.5) + geom_boxplot(width=0.5) +
+  ggtitle("Boxplot & Ridgeline plots of Guardien's Age Distribution with/without Treatment")
+```
+
+### Physical Factors
+
+```{r}
+nsch_df |>
+  mutate(Child_mental_struggle = ifelse(rowSums(nsch_df[, mental_ls] == 1) > 0,
+                                      "Yes", "No")) |>
+  filter(Child_mental_struggle == "Yes") |>
+  pivot_longer(cols = K2Q30A:K2Q38A, names_to = "Issues") |>
+  filter(value == 1) |>
+  select(all_of(c("PHYSICALPAIN", "PHYSACTIV", "Issues"))) |>
+  mutate(PHYSICALPAIN = factor(ifelse(PHYSICALPAIN == 1, "Yes", "No") )) |>
+  #filter(Issues == "K2Q30A") |>
+  ggplot(aes(x = PHYSACTIV, fill = PHYSICALPAIN)) +
+  geom_bar() + facet_wrap(~Issues, ncol = 4)
 ```
 
 ## Main Results
@@ -266,4 +286,4 @@ nsch_df |>
 
 Children who mostly has C's and D's or D's and E's are much more likely to suffer from mental issues. The better grade a child has, the less likely that child has mental issues. Probably mutual effect
 
-### Mutual effect of mental health problems on children
+### Mutual effect of mental health problems on children 
