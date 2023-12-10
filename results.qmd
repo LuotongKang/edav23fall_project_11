@@ -45,14 +45,8 @@ write.csv(nsch_df[,-2], "data/nsch.csv", row.names = FALSE)
 ### Missing Value Analysis
 
 ```{r}
-nsch_df <- read.csv("data/nsch_dropna.csv")
+nsch_df <- read.csv("data/nsch_dropna.csv") # See Chapter 2
 ```
-
-```{r}
-
-```
-
-`{# See Chapter 2}`
 
 ### Change to Descriptive Column Names
 
@@ -206,23 +200,6 @@ nsch_df |>
   ggtitle("Boxplot & Ridgeline plots of Guardien's Age Distribution with/without Treatment")
 ```
 
-### Physical Factors
-
-```{r}
-nsch_df |>
-  mutate(Child_mental_struggle = ifelse(rowSums(nsch_df[, mental_ls] == 1) > 0,
-                                      "Yes", "No")) |>
-  filter(Child_mental_struggle == "Yes") |>
-  pivot_longer(cols = K2Q30A:K2Q38A, names_to = "Issues") |>
-  filter(value == 1) |>
-  select(all_of(c("PHYSICALPAIN", "PHYSACTIV", "Issues"))) |>
-  mutate(PHYSICALPAIN = factor(ifelse(PHYSICALPAIN == 1, "Yes", "No") )) |>
-  #filter(Issues == "K2Q30A") |>
-  ggplot(aes(x = PHYSACTIV, fill = PHYSICALPAIN)) +
-  geom_bar() + facet_wrap(~Issues, ncol = 4)
-```
-
-
 ## Children's experience and mental health
 
 Children's mental well-being is intricately linked to their life experiences, with unfair or distressing encounters potentially contributing to various mental health challenges. Consequently, our objective is to delve into the correlation between children's experiences and the emergence of mental health issues.
@@ -358,4 +335,20 @@ ggplot(mental_issues, aes(axis1 = Depression, axis2 = Anxiety, axis3=ADD_ADHD, y
   geom_text(stat = "stratum", aes(label = paste(after_stat(stratum))))+
   ggtitle("Relationship between Mental Health Issues")+
   scale_x_discrete(limits = c("Depression", "Anxiety","ADD_ADHD"))
+```
+
+## Impacts on Physical Health
+
+```{r}
+nsch_df |>
+  mutate(Child_mental_struggle = ifelse(rowSums(nsch_df[, mental_ls] == 1) > 0,
+                                      "Yes", "No")) |>
+  filter(Child_mental_struggle == "Yes") |>
+  pivot_longer(cols = K2Q30A:K2Q38A, names_to = "Issues") |>
+  filter(value == 1) |>
+  select(all_of(c("PHYSICALPAIN", "PHYSACTIV", "Issues"))) |>
+  mutate(PHYSICALPAIN = factor(ifelse(PHYSICALPAIN == 1, "Yes", "No") )) |>
+  #filter(Issues == "K2Q30A") |>
+  ggplot(aes(x = PHYSACTIV, fill = PHYSICALPAIN)) +
+  geom_bar() + facet_wrap(~Issues, ncol = 4)
 ```
