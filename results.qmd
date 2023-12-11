@@ -337,6 +337,18 @@ ggplot(mental_issues, aes(axis1 = Depression, axis2 = Anxiety, axis3=ADD_ADHD, y
   scale_x_discrete(limits = c("Depression", "Anxiety","ADD_ADHD"))
 ```
 
+Depression, anxiety and ADD/ADHD are three very common mental health issues, and they are likely to affect each other. To explore if children with one of the issues are more likely to have other issues as well, we drew an Alluvial Diagram of three variables:
+
+Depression: referred as `K2Q32A` in the original data, showing whether the children has ever had depression
+
+Anxiety: referred as `K2Q33A` in the original data, showing whether the children has ever had anxiety
+
+ADD/ADHD: referred as `K2Q31A` in the original data, showing whether the children has ever had ADD/ADHD
+
+From the graph, we can see that the majority of children who suffer from depression also suffer from anxiety. Additionally, approximately half of those contending with both depression and anxiety also exhibit symptoms of ADD/ADHD. Moreover, an apparent correlation is observed between anxiety and ADD/ADHD, with nearly half of the children diagnosed with ADD/ADHD also reporting symptoms of anxiety.
+
+These findings align with expectations, as depression often coexists with anxiety. Additionally, the challenges of concentration faced by children with ADD/ADHD may contribute to feelings of distress or anxiety. By fostering an understanding that depression, anxiety, and ADD/ADHD are not isolated entities but rather components of a complex web, parents and educators can play pivotal roles in providing comprehensive and tailored support. This involves not only addressing specific symptoms but also acknowledging the potential effects that each condition may have on the others.
+
 ## Impacts on Physical Health
 
 ```{r}
