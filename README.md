@@ -10,11 +10,11 @@ United States Census Bureau
 
 National Survey of Children's Health, 2022 Topical Data.
 
-## Questions
+## Research Goal
 
-Focus on age groups T2 and T3
+Our project focuses on children of age groups T2 and T3, and we aim to explore the relationships between chilren's mental health and family background, children's experience, and physical health, as well as the mutual effects of different mental health issues.
 
-Dependent variables: mental health issues like Depression, ADHD, Autism
+Dependent variables: mental health issues like Depression, Anxiety, ADHD, and Autism
 
 Independent variables: parent information, basic background checks, mental health related factors
 
