@@ -4,6 +4,7 @@ project:
 
 execute:
   echo: true
+  warning: false
 
 book:
   title: "EDAV of US Children's Mental Health"
