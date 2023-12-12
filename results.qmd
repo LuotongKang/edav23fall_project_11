@@ -1,3 +1,7 @@
+---
+execute:
+  warning: false
+---
 # Results
 
 ## Preprocess
