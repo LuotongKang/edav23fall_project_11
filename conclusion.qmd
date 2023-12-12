@@ -7,3 +7,5 @@
 3.  Many children suffer from more than one mental health issues. Specifically, most children who have depression also suffer from anxiety. Half of the children with ADD/ADHD also have anxiety. Therefore, some mental health issues have mutual impact on each other.
 
 4.  Most children with mental problems exercise 1-3 days a week. Among all problems, children with depression normally exercise less, and children with Speech Disorder likes to do more physical activities. The rate of physical pain has no obvious pattern across mental issues and exercise frequency.
+
+    One Limitation of our project is that most of our data is basically categorical, so the types of plots we can drew is very limited, and our conclusion is qualitative rather than quantitative. Further research may collect some numerical data about children's mental health in the US and conduct some statistical tests to validate our conclusions.
