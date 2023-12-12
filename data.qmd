@@ -82,12 +82,17 @@ different census questions to explore:
 
 -   **Mental Health Indicator**
 
-    `K2Q30A, K2Q31A, K2Q32A, K2Q33A, K2Q34A, K2Q35A, K2Q37A, K2Q38A, K4Q22_R, K4Q23`
+    `K2Q30A, K2Q31A, K2Q32A, K2Q33A, K2Q34A, K2Q35A, K2Q37A, K2Q38A`
 
     These are the target variables, which includes YES/NO questions on
-    whether this child is diagnosed to have mental health issues. Except
-    for 8 health problems, we also have the information that whether
-    this child has taken treatments/medication or not.
+    whether this child is diagnosed to have mental health issues.
+
+-   **Treatment Indicator**
+
+    `K4Q22_R, K4Q23`
+
+    Information of whether this child has taken treatments/medication or
+    not.
 
 ### Visualizations
 
@@ -204,10 +209,3 @@ print(heatmap)
 We can see no extreme correlation is found. Given that the dataset is
 large enough and most columns are categorical, we choose to remove
 missing values.
-
-### Drop and Save
-
-```{r}
-library(tidyverse)
-write.csv(drop_na(nsch_df), "data/nsch_dropna.csv", row.names = FALSE)
-```
