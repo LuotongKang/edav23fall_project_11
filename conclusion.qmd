@@ -1,10 +1,9 @@
 # Conclusion
 
-1.  
+1.  When the guardians has Some College Credit, but No Degree or Associate Degree (AA, AS), their child is slightly easier to be told to have mental among all education level. When the guardian identify themselves to complete 12th grade or less school as highest education experience, a smaller proportion of their child is reported to have mental health struggles. Among children who have mental disease and have a guardian reporting a poor mental status, a larger proportion is having Anxiety comparing to other disease. For children received treatment, the median age of their guardians is higher than the guardians of children who didn't receive treatments.
 
-```{=html}
-<!-- -->
-```
 2.  Children who have experiences of unfair treatment because of gender identity and sexual orientation, being a victim of violence, living with people with alcohol or drug issues, and parent divorce are more likely to have mental health problems. Besides, children's grades at school and mental health have a mutual effect on each other.
+
 3.  Many children suffer from more than one mental health issues. Specifically, most children who have depression also suffer from anxiety. Half of the children with ADD/ADHD also have anxiety. Therefore, some mental health issues have mutual impact on each other.
-4.  
+
+4.  Most children with mental problems exercise 1-3 days a week. Among all problems, children with depression normally exercise less, and children with Speech Disorder likes to do more physical activities. The rate of physical pain has no obvious pattern across mental issues and exercise frequency.
